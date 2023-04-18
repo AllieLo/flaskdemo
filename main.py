@@ -1,17 +1,26 @@
-from flask import Flask, render_template, abort
+from flask import Flask, render_template
 from datetime import datetime
+from pm25 import get_pm25
 
 app = Flask(__name__)
+
+stocks = [
+    {'分類': '日經指數', '指數': '22,920.30'},
+    {'分類': '韓國綜合', '指數': '2,304.59'},
+    {'分類': '香港恆生', '指數': '25,083.71'},
+    {'分類': '上海綜合', '指數': '3,380.68'}
+]
+
+
+@app.route('/pm25')
+def pm25():
+    columns,values = get_pm25()
+    return render_template('./pm25.html', **locals())
 
 
 @app.route('/stock')
 def stock():
-    stocks = [
-        {'分類': '日經指數', '指數': '22,920.30'},
-        {'分類': '韓國綜合', '指數': '2,304.59'},
-        {'分類': '香港恆生', '指數': '25,083.71'},
-        {'分類': '上海綜合', '指數': '3,380.68'}
-    ]
+
     return render_template('./stock.html', stocks=stocks,
                            datetime=get_date())
 
