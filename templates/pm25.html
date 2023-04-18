@@ -6,12 +6,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PM2.5資訊</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <style>
+        table {
+            background-color: rgb(166, 180, 255);
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        th {
+            font-size: 24px;
+            background-color: black;
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
     <h1 class="banner">PM2.5資訊</h1>
-    {{columns}}
-    {{values}}
+    {% if not columns %}
+    <h2 style="color:red">資料忙碌中，請稍後在試</h2>
+    {% else %}
+    <table border="1">
+        <thead>
+            <tr>
+                {% for column in columns %}
+                <th>{{column}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for value in values %}
+            <tr>
+                {% for data in value %}
+                <td>{{data}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
 </body>
 
 </html>

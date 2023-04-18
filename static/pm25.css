@@ -1,0 +1,11 @@
+table {
+    background-color: rgb(166, 180, 255);
+    width: 600px;
+    margin: 0 auto;
+}
+
+th {
+    font-size: 24px;
+    background-color: black;
+    color: white;
+}

@@ -1,0 +1,21 @@
+body {
+    text-align: center;
+    background-color: antiquewhite;
+}
+
+li {
+    width: 200px;
+    padding: 12px;
+    margin: 6px;
+    border-radius: 6px;
+    color: chocolate;
+    display: inline-block;
+    list-style-type: none;
+    background-color: gold;
+}
+
+.banner {
+    background-color: cadetblue;
+    padding: 12px;
+    color: white;
+}
