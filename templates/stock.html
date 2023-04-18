@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>股市資訊</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: antiquewhite;
+        }
+
+        li {
+            width: 200px;
+            padding: 12px;
+            margin: 6px;
+            border-radius: 6px;
+            color: chocolate;
+            display: inline-block;
+            list-style-type: none;
+            background-color: gold;
+        }
+
+        .banner {
+            background-color: cadetblue;
+            padding: 12px;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="banner">亞股資訊網</h1>
+    <p>{{datetime}}</p>
+    {% for stock in stocks %}
+    <li>{{stock['分類']}}{{stock['指數']}}</li>
+    {% endfor %}
+
+</body>
+
+</html>
