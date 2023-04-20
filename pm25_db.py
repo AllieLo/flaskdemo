@@ -64,13 +64,12 @@ def write_db():
     print(f'更新:{count}筆資料.')
 
 
-if __name__ == "__main__":
-    try:
-        connect_db()
-        get_data()
-        write_db()
-    except Exception as e:
-        print(e)
-    finally:
-        if conn is not None:
-            conn.close()
+try:
+    connect_db()
+    get_data()
+    write_db()
+except Exception as e:
+    print(e)
+finally:
+    if conn is not None:
+        conn.close()
