@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="../static/style.css">
     <style>
         table {
-            background-color: rgb(166, 180, 255);
+            background-color: rgb(13, 31, 134);
+            color: white;
             width: 80%;
             margin: 0 auto;
         }
@@ -28,12 +29,17 @@
             table {
                 width: 100%;
             }
+
+            th {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
 
 <body>
     <h1 class="banner">PM2.5資訊</h1>
+    <p>目前時間:<span class="date">2023/04/20 19:50:50</span></p>
     <form action="/pm25" method="POST" style="margin-bottom: 12px;">
         <input type="submit" value="排序" name="sort" id="sort">
         <input type="submit" value="更新" name="update">
@@ -62,7 +68,7 @@
         </tbody>
     </table>
     {% endif %}
-
+    <script src="../static/pm25.js"></script>
 </body>
 
 </html>
