@@ -8,11 +8,11 @@ def get_pm25(sort=False):
         resp = requests.get(url)
         datas = resp.json()['records']
         # 組合標題
-        columns = list(datas[0].keys())
+        columns = list(datas[0].keys())[:-1]
         # 組合內容
         values = []
         for data in datas:
-            data = list(data.values())
+            data = list(data.values())[:-1]
             try:
                 data[2] = eval(data[2])
                 values.append(data)
