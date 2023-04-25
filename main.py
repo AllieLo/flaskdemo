@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from datetime import datetime
-from pm25 import get_pm25, get_pm25_db
+from pm25 import get_pm25
 import json
 
 app = Flask(__name__)
@@ -27,7 +27,7 @@ def pm25_charts():
 
 @app.route('/pm25-data', methods=['POST'])
 def get_pm25_data():
-    columns, values = get_pm25_db()
+    columns, values = get_pm25()
     # 縣市
     county = [value[1] for value in values]
     # 站點名稱
@@ -46,15 +46,15 @@ def get_pm25_data():
 @app.route('/pm25', methods=['GET', 'POST'])
 def pm25():
     if request.method == 'GET':
-        columns, values = get_pm25_db()
+        columns, values = get_pm25()
         # 使用GET => request.args.get(name)
         # if request.args.get('sort'):
         #     olumns, values = get_pm25(True)
     if request.method == 'POST':
         if request.form.get('sort'):
-            columns, values = get_pm25_db(True)
+            columns, values = get_pm25(True)
         else:
-            columns, values = get_pm25_db()
+            columns, values = get_pm25()
 
     print(columns, values)
 
