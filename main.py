@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from datetime import datetime
-from pm25 import get_pm25,get_pm25_db
+from pm25 import get_pm25,get_pm25_db,get_six_pm25
 import json
 
 app = Flask(__name__)
@@ -25,9 +25,19 @@ def pm25_charts():
     return render_template('./pm25-charts.html')
 
 
+@app.route('/pm25-six-data')
+def get_six_pm25_data():
+    result=get_six_pm25()
+    datas = {
+        'county': list(result.keys()),    
+        'pm25': list(result.values()),     
+    }
+
+    return json.dumps(datas,ensure_ascii=False)
+
 @app.route('/pm25-data', methods=['POST'])
 def get_pm25_data():
-    columns, values = get_pm25()
+    columns, values = get_pm25_db()
 
     datas={'error':'連線錯誤!'}
     if values is not None:
@@ -39,13 +49,16 @@ def get_pm25_data():
         pm25 = [value[2] for value in values]
 
         result=list(zip(site,pm25))
-        result=sorted(datas,key=lambda x:x[-1])
-        print(result)
+        sorted_data=sorted(result,key=lambda x:x[-1])
+        print(sorted_data)
    
         datas = {
             'county': county,
             'site': site,
-            'pm25': pm25
+            'pm25': pm25,
+            'highest':sorted_data[-1],
+            'lowest':sorted_data[0],
+            'date':get_date()
         }
 
     return json.dumps(datas, ensure_ascii=False)
@@ -55,9 +68,6 @@ def get_pm25_data():
 def pm25():
     if request.method == 'GET':
         columns, values = get_pm25_db()
-        # 使用GET => request.args.get(name)
-        # if request.args.get('sort'):
-        #     olumns, values = get_pm25(True)
     if request.method == 'POST':
         if request.form.get('sort'):
             columns, values = get_pm25_db(True)
