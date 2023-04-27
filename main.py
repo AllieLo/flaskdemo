@@ -22,7 +22,7 @@ def update_db():
 @app.route('/pm25-charts')
 def pm25_charts():
 
-    return render_template('./pm25_charts.html')
+    return render_template('./pm25-charts.html')
 
 
 @app.route('/pm25-data', methods=['POST'])
