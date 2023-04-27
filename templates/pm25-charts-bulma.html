@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="1800">
+    <title>全台PM2.5即時資訊</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.2.0/echarts.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <!-- <link rel="stylesheet" href="{{ url_for('static',filename='css/bulma.min.css') }}"> -->
+
+</head>
+
+<body>
+    <div class="hero">
+        <div class="hero-body">
+            <div class="columns is-vcentered">
+                <div class="column is-half">
+                    <p class="title is-2">
+                        全台PM2.5即時資訊
+                    </p>
+                    <p class="subtitle">
+                        資料來源:<a href="https://data.gov.tw/dataset/34827" target="_blank">政府資料開放平台</a><br>
+                    </p>
+                    <small class="has-text-bottom" id="date">
+                        更新時間:取得中...
+                    </small>
+                    <!-- <p class="mt-2"> <a href="#" class="button is-info is-medium">更新資料</a></p> -->
+
+                    <form action="./pm25-charts" class="form mt-2">
+                        <button class="button is-info is-medium">
+                            更新資料
+                        </button>
+                    </form>
+                </div>
+                <div class="column">
+                    <div class="card  has-text-centered">
+                        <header class="card-header">
+                            <p class="card-header-title is-size-2 is-centered has-background-danger has-text-white"
+                                id="pm25_high_site">
+                                N/A
+                            </p>
+                        </header>
+                        <div class="card-content is-size-2" id="pm25_high_value">
+                            0
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="card  has-text-centered">
+                        <header class="card-header">
+                            <p class="card-header-title is-size-2 is-centered has-background-success has-text-white"
+                                id="pm25_low_site">
+                                N/A
+                            </p>
+                        </header>
+                        <div class="card-content is-size-2" id="pm25_low_value">
+                            0
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hero is-warning">
+        <div class="hero-body">
+            <p class="title">
+                什麼是PM2.5
+            </p>
+            <p class="subtitle" style="line-height: normal;">
+                空氣中存在許多污染物，其中漂浮在空氣中類似灰塵的粒狀物稱之為懸浮微粒（Particulate
+                Matter）。
+                <br><b>懸浮微粒粒徑大小有別，≦2.5微米(μm)的懸浮微粒，稱為細懸浮微粒（PM2.5），單位為微克/立方公尺（μg/m3）。</b>
+                <br><b
+                    style="color: rgb(138, 0, 0);">PM2.5直徑不到髮絲粗細的1/28</b>，非常微細可穿透肺部氣泡，並直接進入血管中隨著血液循環全身，故對人體及生態所造成之影響是不容忽視的。
+            </p>
+        </div>
+    </div>
+    <div class="hero is-dark">
+        <div class="columns
+            is-vcentered is-justify-content-space-evenly p-5 ">
+            <div class="column two-four">
+                <p class="title is-size-3">
+                    濃度標準
+                </p>
+                <table class="table is-bordered is-narrow">
+                    <thead>
+                        <tr class="has-text-centered has-background-dark is-selected">
+                            <th>分類</th>
+                            <th>低</th>
+                            <th>中</th>
+                            <th>高</th>
+                            <th>非常高</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="has-text-centered">
+                            <th class="has-background-dark  is-selected">濃度(μg/m3)</th>
+                            <td>&lt;=35</td>
+                            <td>&lt;=53</td>
+                            <td>&lt;=70</td>
+                            <td>&gt;&nbsp;70</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ul>
+                    <li><span class="has-text-success"> &lt;=35</span> 正常戶外活動。</li>
+                    <li><span class="has-text-success"> &lt;=53</span> 有心臟、呼吸道及心血管疾病的成人與孩童感受到癥狀時，應考慮減少戶外活動。</li>
+                    <li><span class="has-text-warning"> &lt;=70</span> 任何人如果有不適，如眼痛，咳嗽或喉嚨痛等，應該考慮減少戶外活動。</li>
+                    <li><span class="has-text-danger"> &gt;70</span> 沒事不要外出，有氣喘的人可能需增加使用吸入劑的頻率。</li>
+                </ul>
+
+            </div>
+            <div class="column is-two-four">
+                <div class="box">
+                    <div id="six" style="width: 100%;height:400px;"></div>
+                </div>
+                <!-- <img src="https://img.lyishu.com/31/a7/31a736e0294b3d9356f8eef7c72bb2a6.jpg" alt=""> -->
+            </div>
+        </div>
+    </div>
+    <div class="hero m-3">
+        <div class="columns">
+            <div class="column is-12">
+                <div id="main" style="width: 100%;height:500px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero m-3">
+        <div class="columns">
+            <div class="column is-12">
+                <p class="is-size-3 box has-text-danger has-text-centered has-background-dark">各縣市數值</p>
+                <div class="select">
+                    <select name="select_county" id="select_county">
+                        {% for county in countys %}
+                        <option value="{{county}}">{{county}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <input class="button is-warning" type="button" value="確定" id="county_btn">
+                <div id="county" class="mt-3" style="width: 100%;height:500px;"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="columns
+        is-vcentered is-justify-content-space-evenly p-5
+        has-background-dark m-0">
+        <div class="column is-two-third m-3">
+            <iframe width="100%" height="361" src="https://www.youtube.com/embed/QrxnERnlRQ8"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+
+            <!-- <img src="{{ url_for('static', filename='images/pic2.png') }}" alt=""> -->
+        </div>
+        <div class="column is-one-third">
+            <p class="title is-2 is-spaced has-text-white">
+                製作團隊
+            </p>
+            <p class="subtitle is-6 has-text-white">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt provident, optio eaque
+                iure
+                obcaecati
+                omnis possimus vero expedita necessitatibus fugiat sunt libero blanditiis tempora,
+                doloribus, dolore
+                modi aut nisi voluptatibus!
+            </p>
+            <button class="button is-light is-outline is-medium">
+                聯絡我們
+            </button>
+        </div>
+    </div>
+
+    <!-- <script src="{{ url_for('static', filename='./js/index.js') }}"></script> -->
+    <script src="../static/main.js"></script>
+</body>
+
+</html>

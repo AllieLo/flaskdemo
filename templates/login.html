@@ -6,59 +6,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"> -->
     <style>
-        #container {
-            width: 80%;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        form {
-
-            width: 60%;
-            margin: 0 auto;
-            background-color: aqua;
-            padding: 24px;
-            border-radius: 6px;
-
-        }
-
         input {
-            margin-top: 6px;
-        }
-
-        input[value="登入"] {
-            background-color: green;
-            color: white;
-        }
-
-        input[value="註冊"] {
-            background-color: rgb(128, 0, 0);
-            color: white;
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
-    <div id="container">
-        <h1>登入畫面</h1>
-        <form action="">
-            <label for="">Username:</label><br>
-            <input type="text"><br>
-            <label for="">Password:</label><br>
-            <input type="password"><br>
-            <input type="checkbox" name="" id="">Remember
-            <br>
-            <input type="submit" value="登入">
-            <input type="submit" value="註冊">
-        </form>
-    </div>
-
-
-    </div>
-    </div>
-    </div>
+    <div class="hero is-success is-fullheight">
+        <div class="hero-body has-text-centered">
+            <div class="container">
+                <div class="columns">
+                    <div class="column has-text-centered">
+                        <p class="title is-size-2 mb-5">登入畫面</p>
+                    </div>
+                </div>
+                <div class="columns is-centered">
+                    <div class="column is-5">
+                        <form action="" class="box">
+                            <div class="field">
+                                <label for="" class="label">Username</label>
+                                <input type="text" class="input">
+                            </div>
+                            <div class="filed">
+                                <label for="" class="label">Password</label>
+                                <input type="password" class="input">
+                            </div>
+                            <div class="field has-text-left ml-1">
+                                <input type="checkbox" class="checkbox" name="" id="">
+                                <span class="has-text-danger">Remember</span>
+                            </div>
+                            <div class="field mt-3">
+                                <input type="submit" class="button is-info" value="登入">
+                                <input type="submit" class="button is-warning" value="註冊">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 

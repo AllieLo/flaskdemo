@@ -14,6 +14,11 @@ $(document).ready(() => {
     drawSixPM25();
 });
 
+window.onresize = function () {
+    chart.resize();
+    chart1.resize();
+}
+
 
 function drawSixPM25() {
     $.ajax(
